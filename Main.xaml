@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1184,2154" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:m="clr-namespace:MongoActivities;assembly=MongoActivities" xmlns:mb="clr-namespace:MongoDB.Bson;assembly=MongoDB.Bson" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:md="clr-namespace:MongoDB.Driver;assembly=MongoDB.Driver" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1184,2154" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mb="clr-namespace:MongoDB.Bson;assembly=MongoDB.Bson" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:md="clr-namespace:MongoDB.Driver;assembly=MongoDB.Driver" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>Microsoft.VisualBasic</x:String>
@@ -82,30 +82,82 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="594,2089" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="594,1989" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="MongoDT" />
       <Variable x:TypeArguments="md:MongoDatabaseBase" Name="MongoDB" />
       <Variable x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" Name="MongoCollection" />
-      <Variable x:TypeArguments="scg:List(mb:BsonDocument)" Name="mongoFindResult" />
+      <Variable x:TypeArguments="scg:List(mb:BsonDocument)" Name="listMongoFindResult" />
       <Variable x:TypeArguments="x:Int32" Name="iOrcamento" />
+      <Variable x:TypeArguments="x:String" Name="sConnectionString">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">mongodb://localhost:27017</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="sDatabaseName">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">Marvel</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="sCollectionName">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">Movies</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="sItem">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">category</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="sValue">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">Avengers</Literal>
+        </Variable.Default>
+      </Variable>
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <m:ConnectToMongo ConnectionString="mongodb://localhost:27017" DataBase="[MongoDB]" DatabaseName="Marvel" DisplayName="Connect to mongo" sap:VirtualizedContainerService.HintSize="532,186" sap2010:WorkflowViewState.IdRef="ConnectToMongo_1">
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </m:ConnectToMongo>
-    <m:GetMongoCollection Collection="[MongoCollection]" CollectionName="Movies" DataBase="[MongoDB]" DisplayName="Get mongo collection" sap:VirtualizedContainerService.HintSize="532,186" sap2010:WorkflowViewState.IdRef="GetMongoCollection_1" />
-    <m:FindActivity Collection="[MongoCollection]" DisplayName="Find activity" FilterQuery="[new BsonDocument()]" FindResult="[mongoFindResult]" sap:VirtualizedContainerService.HintSize="532,186" sap2010:WorkflowViewState.IdRef="FindActivity_1" />
-    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,329" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[mongoFindResult]">
+    <ui:Comment sap:VirtualizedContainerService.HintSize="532,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Conectar-se com o MongoDB" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ConnectToMongo.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ConnectToMongo.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="sConnectionString">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sConnectionString" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="sDatabaseName">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sDatabaseName" />
+        </InArgument>
+        <OutArgument x:TypeArguments="md:MongoDatabaseBase" x:Key="MongoDB">
+          <mva:VisualBasicReference x:TypeArguments="md:MongoDatabaseBase" ExpressionText="MongoDB" />
+        </OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:Comment sap:VirtualizedContainerService.HintSize="532,56" sap2010:WorkflowViewState.IdRef="Comment_2" Text="// Recebe coleção" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetMongoCollection.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="GetMongoCollection.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="md:MongoDatabaseBase" x:Key="MongoDB">
+          <mva:VisualBasicValue x:TypeArguments="md:MongoDatabaseBase" ExpressionText="MongoDB" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="sCollectionName">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sCollectionName" />
+        </InArgument>
+        <OutArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
+          <mva:VisualBasicReference x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
+        </OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivities.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="FindMongoActivities.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
+          <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
+        </InArgument>
+        <OutArgument x:TypeArguments="scg:List(mb:BsonDocument)" x:Key="listMongoFindResult">
+          <mva:VisualBasicReference x:TypeArguments="scg:List(mb:BsonDocument)" ExpressionText="listMongoFindResult" />
+        </OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,329" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listMongoFindResult]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="mb:BsonDocument">
           <ActivityAction.Argument>
@@ -122,14 +174,22 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <m:FindActivity Collection="[MongoCollection]" DisplayName="Find activity" FilterQuery="[New BsonDocument(New BsonElement(&quot;category&quot;,&quot;Avengers&quot;))]" FindResult="[mongoFindResult]" sap:VirtualizedContainerService.HintSize="532,186" sap2010:WorkflowViewState.IdRef="FindActivity_2">
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </m:FindActivity>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivity.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="FindMongoActivity.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
+          <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
+        </InArgument>
+        <OutArgument x:TypeArguments="scg:List(mb:BsonDocument)" x:Key="listMongoFindResult">
+          <mva:VisualBasicReference x:TypeArguments="scg:List(mb:BsonDocument)" ExpressionText="listMongoFindResult" />
+        </OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_sItem">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sItem" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_sValue">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sValue" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
     <Assign sap:VirtualizedContainerService.HintSize="532,82" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:Int32">[iOrcamento]</OutArgument>
@@ -138,7 +198,7 @@
         <InArgument x:TypeArguments="x:Int32">0</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,451" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[mongoFindResult]">
+    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,451" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listMongoFindResult]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="mb:BsonDocument">
           <ActivityAction.Argument>

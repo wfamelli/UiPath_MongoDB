@@ -86,7 +86,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <m:FindActivity Collection="[MongoCollection]" DisplayName="Find activity" FilterQuery="[New BsonDocument(New BsonElement(&quot;category&quot;,&quot;Avengers&quot;))]" FindResult="[listMongoFindResult]" sap:VirtualizedContainerService.HintSize="388,186" sap2010:WorkflowViewState.IdRef="FindActivity_2">
+    <m:FindActivity Collection="[MongoCollection]" DisplayName="Find activity" FilterQuery="[New BsonDocument(New BsonElement(in_sItem,in_sValue))]" FindResult="[listMongoFindResult]" sap:VirtualizedContainerService.HintSize="388,186" sap2010:WorkflowViewState.IdRef="FindActivity_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>

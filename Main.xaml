@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1184,2154" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mb="clr-namespace:MongoDB.Bson;assembly=MongoDB.Bson" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:md="clr-namespace:MongoDB.Driver;assembly=MongoDB.Driver" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1184,2171" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mb="clr-namespace:MongoDB.Bson;assembly=MongoDB.Bson" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:md="clr-namespace:MongoDB.Driver;assembly=MongoDB.Driver" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>Microsoft.VisualBasic</x:String>
@@ -37,6 +37,8 @@
       <x:String>MongoDB.Bson</x:String>
       <x:String>MongoDB.Driver.Core</x:String>
       <x:String>MongoDB.Libmongocrypt</x:String>
+      <x:String>System.Threading.Tasks</x:String>
+      <x:String>System.Threading</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -80,9 +82,15 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
+      <AssemblyReference>System.Threading.Tasks.Extensions</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="594,1989" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="548,2106" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="md:MongoDatabaseBase" Name="MongoDB" />
       <Variable x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" Name="MongoCollection" />
@@ -113,14 +121,35 @@
           <Literal x:TypeArguments="x:String">Avengers</Literal>
         </Variable.Default>
       </Variable>
+      <Variable x:TypeArguments="x:String" Name="sFilm">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">Cidade de Deus</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="sCategory">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">BRFilme</Literal>
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:Int32" Name="iworldwide">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:Int32" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:Int32" Default="20" Name="ibudget" />
+      <Variable x:TypeArguments="x:String" Name="sYear">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String">2005</Literal>
+        </Variable.Default>
+      </Variable>
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="532,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Conectar-se com o MongoDB" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ConnectToMongo.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ConnectToMongo.xaml">
+    <ui:Comment sap:VirtualizedContainerService.HintSize="486,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Conectar-se com o MongoDB" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ConnectToMongo.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ConnectToMongo.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="sConnectionString">
           <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sConnectionString" />
@@ -133,8 +162,8 @@
         </OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="532,56" sap2010:WorkflowViewState.IdRef="Comment_2" Text="// Recebe coleção" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetMongoCollection.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="GetMongoCollection.xaml">
+    <ui:Comment sap:VirtualizedContainerService.HintSize="486,56" sap2010:WorkflowViewState.IdRef="Comment_2" Text="// Recebe coleção" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetMongoCollection.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="GetMongoCollection.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="md:MongoDatabaseBase" x:Key="MongoDB">
           <mva:VisualBasicValue x:TypeArguments="md:MongoDatabaseBase" ExpressionText="MongoDB" />
@@ -147,7 +176,7 @@
         </OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivities.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="FindMongoActivities.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivities.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="FindMongoActivities.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
           <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
@@ -157,7 +186,7 @@
         </OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,329" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listMongoFindResult]">
+    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="486,329" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[listMongoFindResult]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="mb:BsonDocument">
           <ActivityAction.Argument>
@@ -173,8 +202,14 @@
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivity.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="532,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="FindMongoActivity.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="FindMongoActivity.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="FindMongoActivity.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
           <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
@@ -190,7 +225,7 @@
         </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <Assign sap:VirtualizedContainerService.HintSize="532,82" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign sap:VirtualizedContainerService.HintSize="486,82" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:Int32">[iOrcamento]</OutArgument>
       </Assign.To>
@@ -198,7 +233,7 @@
         <InArgument x:TypeArguments="x:Int32">0</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="532,451" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listMongoFindResult]">
+    <ui:ForEach x:TypeArguments="mb:BsonDocument" CurrentIndex="{x:Null}" DisplayName="Percorre todos Filmes" sap:VirtualizedContainerService.HintSize="486,52" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[listMongoFindResult]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="mb:BsonDocument">
           <ActivityAction.Argument>
@@ -222,7 +257,54 @@
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ui:LogMessage DisplayName="Imprime total de orcamento" sap:VirtualizedContainerService.HintSize="532,92" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;A soma de orcamento dos filmes foi de Us$&quot; &amp; iOrcamento.ToString]" />
+    <ui:LogMessage DisplayName="Imprime total de orcamento" sap:VirtualizedContainerService.HintSize="486,52" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;A soma de orcamento dos filmes foi de Us$&quot; &amp; iOrcamento.ToString]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:LogMessage>
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="486,85" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Inserindo o filme: Cidade de Deus com pouca informação &quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InsertOneActivity.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="InsertOneActivity.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_sYear">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sYear" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_ibudget">
+          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="ibudget" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_iworldwide">
+          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="iworldwide" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_sCategory">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sCategory" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_sFilm">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sFilm" />
+        </InArgument>
+        <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="in_MongoCollection">
+          <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="486,85" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;Notamos que o filme: Cidade de Deus não faz parte do universo Marvel, estamos deletando este registro.&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="DeleteRecordActivity.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="486,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="DeleteRecordActivity.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" x:Key="MongoCollection">
+          <mva:VisualBasicValue x:TypeArguments="md:IMongoCollection(mb:BsonDocument)" ExpressionText="MongoCollection" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="sFilm">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="sFilm" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
   </Sequence>
 </Activity>
